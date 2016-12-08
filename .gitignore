@@ -1,0 +1,41 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd (12,11,5,4,3,2);
+char palabra [15];
+int contador=0; 
+String ingreso;
+
+
+
+void setup() {
+  // put your setup code here, to run once:
+ 
+ lcd.begin(16,2);
+  Serial.begin(9600);
+  Serial.println("HOLA");
+  Serial.println("Escriba el texto texto para vizualizar en la LCD");
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+ 
+if (Serial.available()>0){
+    ingreso=Serial.readString();  
+    ingreso.toCharArray(palabra,ingreso.length()+1); 
+    Serial.println(ingreso);       
+  }  
+    lcd.clear(); 
+    for(;contador<ingreso.length()+1;contador++){ 
+      lcd.setCursor(contador, 0); 
+      lcd.print(palabra[contador]); 
+    }    
+    lcd.clear();
+    contador=0; 
+    delay(300); 
+    for(;contador<ingreso.length()+1;contador++){
+      lcd.setCursor(contador, 0);
+      lcd.print(palabra[contador]);       
+    }
+    contador=0;    
+    delay(300);
+}
